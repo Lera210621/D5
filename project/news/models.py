@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from datetime import datetime
 from django.db.models import Sum
 from django.urls import reverse
+from django.core.validators import MinValueValidator
 
 class Author(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -27,7 +28,9 @@ class Author(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=64, unique=True)
-
+    subscribers = models.ManyToManyField(User, related_name='categories')
+    def __str__(self):
+        return self.name
 
 class Post(models.Model):
 
@@ -38,7 +41,7 @@ class Post(models.Model):
     autor = models.ForeignKey(Author, on_delete=models.CASCADE)
     type = models.CharField(max_length=20, choices=POSITIONS, default='new')
     dateCreation = models.DateTimeField(auto_now_add=True)
-    category = models.ManyToManyField(Category, through='PostCategory')
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True,blank=True)
     title = models.CharField(max_length=255)
     text = models.TextField()
     rating = models.SmallIntegerField(default=0)
@@ -82,4 +85,16 @@ class Comment(models.Model):
         self.save()
 
 
-
+class Subscription(models.Model):
+    user = models.ForeignKey(
+        to=User,
+        on_delete=models.CASCADE,
+        related_name='subscriptions',
+    )
+    category = models.ForeignKey(
+        to=Category,
+        on_delete=models.CASCADE,
+        related_name='subscriptions',
+    )
+    def __str__(self):
+        return f'{self.user.username} :{self.category.name}'

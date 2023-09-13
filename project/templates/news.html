@@ -40,7 +40,7 @@
                <td>{{ post.title|censor }}</td>
                <td>{{ post.dateCreation|date:'d M Y' }}</td>
                <td>{{ post.text|censor|truncatechars:20 }}</td>
-               <td>{{ post.type}}</td>
+               <td>{{post.type}}</td>
                <td>
                     {% if perms.simpleapp.change_post %}
                     <a href="{% url 'product_update' pk=post.id %}">Изменить</a>

@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.yandex',
+    'django_apscheduler'
 ]
 SITE_ID=1
 MIDDLEWARE = [
@@ -115,7 +116,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 
@@ -149,6 +150,28 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
-ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 
 ACCOUNT_FORMS = {"signup": "accounts.forms.CustomSignupForm"}
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = "Lera210621@yandex.ru"
+EMAIL_HOST_PASSWORD = "lxdmdcteubunqkty"
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+
+DEFAULT_FROM_EMAIL = "Lera210621@yandex.ru"
+
+SERVER_EMAIL = "Lera210621@yandex.ru"
+MANAGERS = (
+    ('Lera', 'lera.vakulenko.01@bk.ru'),
+    ('Lera1',  'lera.vakulenko@list.ru'),
+    )
+ADMINS = (
+    ('lera', 'lera.vakulenko.012106@gmail.com'),
+)
+
+EMAIL_SUBJECT_PREFIX = 'Hi'
+
